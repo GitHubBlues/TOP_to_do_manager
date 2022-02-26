@@ -1,6 +1,7 @@
 const path = require('path');
 const common = require("./webpack.config.common");
 const {merge} = require("webpack-merge");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = merge(common, {
   mode: "production",
@@ -11,6 +12,11 @@ module.exports = merge(common, {
     publicPath: '/TOP_to_do_manager/', 
     },
   
+  plugins: [new HtmlWebpackPlugin({
+         template: "./src/template_index_prod.html",
+         filename: "index.html"})
+          ],
+
   module: {
     rules: [
       {
