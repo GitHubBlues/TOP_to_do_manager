@@ -1,0 +1,1 @@
+(()=>{const e=document.querySelector(".container-left"),n=document.querySelector(".container-right");e.innerHTML="left-container",n.innerHTML="right-container"})();
