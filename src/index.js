@@ -1,7 +1,8 @@
 import './style.css';
-import radialBtnsMenu from './radialButtons.js';
-import {projectDB} from './projects.js';
 
+import radialBtnsMenu  from './radialButtons.js';
+import leftDOM from './left_panel.js';
+import {projectDB} from './projects.js';
 
 import iDelete from "./img/3643729_delete_trash_icon.svg";
 import iPencil from "./img/326602_edit_pencil_icon.svg";
@@ -29,79 +30,5 @@ proj.addTask(["get dinosaur egg", "get egg from international auction","1995-6-2
 projectList.push(proj);
 
 
-// // Project
-const ctProjects = document.createElement("div");
-ctProjects.classList.add("left-container-projects");
+const leftPanel = leftDOM.onloadLeft(projectList);
 
-const title = document.createElement("h2");
-title.classList.add("project-title");
-title.innerHTML = "Projects";
-
-
-const ctProjectList = document.createElement("div");
-ctProjectList.classList.add("project-list");
-// ctProjectList.innerHTML = "Placeholder";
-
-function showProjects(projectList){
-    for (const item of projectList) {
-        const container = document.createElement('div');
-        container.classList.add("project-names-container");
-        const div = document.createElement('div'); 
-        div.classList.add("project-names");
-        div.innerHTML = item.name;
-        const icon = document.createElement("img");
-        icon.classList.add("icon-delete");
-        icon.src = iDelete;
-        
-        container.appendChild(div);
-        container.appendChild(icon);
-        ctProjectList.appendChild(container);
-        
-        //icon.addEventListener('click', callback_deleteProject);
-    }
-}
-
-showProjects(projectList);
-
-ctProjects.appendChild(title);
-ctProjects.appendChild(ctProjectList);
-
-containerLHS.appendChild(ctProjects);
-
-
-// // Add project
-const containerAddBtn = document.createElement("div");
-containerAddBtn.classList.add("add-project-container");
-
-const btnAddProject = document.createElement("img");
-btnAddProject.classList.add("btn-add-project");
-btnAddProject.src = iAdd;
-
-let labelAddBtn = document.createElement("div");
-labelAddBtn.classList.add("label-btn-add-project");
-labelAddBtn.innerHTML = "New project";
-
-containerAddBtn.appendChild(btnAddProject);
-containerAddBtn.appendChild(labelAddBtn);
-containerLHS.appendChild(containerAddBtn);
-
-
-
-// // Radial button
-const radialMenu= radialBtnsMenu.makeRadialMenu();
-containerLHS.appendChild(radialMenu);
-
-
-// // Reset database
-const btnStorageContainer = document.createElement("div"); 
-btnStorageContainer.classList.add("storage-container");
-const btnStorage = document.createElement("img");
-btnStorage.classList.add("icon-database");
-btnStorage.src = iDatabase;
-const labelBtnStorage = document.createElement("div");
-labelBtnStorage.classList.add("label-icon-database");
-labelBtnStorage.innerHTML = "Reset database";
-
-btnStorageContainer.appendChild(btnStorage);
-btnStorageContainer.appendChild(labelBtnStorage);
-containerLHS.appendChild(btnStorageContainer);
