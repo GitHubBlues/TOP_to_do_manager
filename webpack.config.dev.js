@@ -10,7 +10,7 @@ module.exports = merge(common, {
     filename: 'dev_main.bundle.js',
     path: path.resolve(__dirname, 'devdev'),
     },
-
+  watch: true, 
   plugins: [new HtmlWebpackPlugin({
          template: "./src/template_index_dev.html",
          filename: "index.html"})
