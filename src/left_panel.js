@@ -91,7 +91,7 @@ const leftDOM = (() => {
     function onloadLeft(projectList) {
             
         const part1 = areaProjects(projectList)
-        containerLHS.appendChild( part1 );
+        containerLHS.appendChild( part1 )
 
         const part2 = areaAddProject() ;    
         console.log(part2);

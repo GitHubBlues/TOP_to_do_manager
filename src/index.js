@@ -31,4 +31,3 @@ projectList.push(proj);
 
 
 const leftPanel = leftDOM.onloadLeft(projectList);
-
