@@ -47,7 +47,6 @@ const leftDOM = (() => {
             ctProjects.appendChild(container);
             
             //icon.addEventListener('click', callback_deleteProject);
-              
         }
     }
 
