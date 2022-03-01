@@ -21,17 +21,17 @@ let proj;
 proj= projectDB();
 proj.name = "Learn japanese";
 proj.describe = "The objective of this project is to learn some basic japanese with the aim of being able to carry on simple conversations with Dai.";
-proj.addTask(["learn Hiragana", "get things from book", "1995-6-22", "high", "OK", false]);
-proj.addTask(["learn Katakana", "get things from book", "1995-6-12", "medium", "OK", false]);
-proj.addTask(["learn Kanjis", "get things from book", "1995-6-20", "low", "OK", false]);
+proj.addTask(["learn Hiragana", "get things from book", "1995-12-22", "high", "OK", false]);
+proj.addTask(["learn Katakana", "get things from book", "1995-12-12", "medium", "OK", false]);
+proj.addTask(["learn Kanjis", "get things from book", "1995-12-20", "low", "OK", false]);
 projectList.push(proj);
 
 proj = projectDB();
 proj.name = "Get a pet";
 proj.describe = "This project is about identifying a suitable pet, preferably a dinosaur";
-proj.addTask(["decide about dinosaur species", "read about different scpecies.", "1995-6-23", "medium", "OK", false]);
-proj.addTask(["discuss potential species with Professor Fink", "get Fink's contant details.","1995-6-24", "medium", "OK", false]);
-proj.addTask(["get dinosaur egg", "get egg from international auction","1995-6-25", "high", "OK", false]);
+proj.addTask(["decide about dinosaur species", "read about different scpecies.", "1995-06-23", "medium", "OK", false]);
+proj.addTask(["discuss potential species with Professor Fink", "get Fink's contant details.","1995-06-24", "medium", "OK", false]);
+proj.addTask(["get dinosaur egg", "get egg from international auction","1995-06-25", "high", "OK", false]);
 projectList.push(proj);
 
 
@@ -130,7 +130,6 @@ const leftPanelContent = leftDOM.onloadLeft(projectList);
         let newDate = new Date(formattedDate[0], Number(formattedDate[1])-1, formattedDate[2]);
         taskDate.textContent = format(newDate, 'do MM y');
    
-        
         divContainer.append( taskCheckbox, divContent );
         divContent.append( taskName, taskDetails );
         taskDetails.appendChild(taskDate);
@@ -167,8 +166,7 @@ const leftPanelContent = leftDOM.onloadLeft(projectList);
 
 
 
-    function makeInputForm(){
-
+    function makeInputForm(task){
         const divContainer = document.createElement("div");
         divContainer.classList.add("add-task-container");
         const containerTaskName = document.createElement("div");
@@ -224,6 +222,14 @@ const leftPanelContent = leftDOM.onloadLeft(projectList);
 
         taskPriorityContainer.append( labelPriority, taskPriority );
         divContainer.append( containerTaskName, containerTaskDescription, containerTaskDate, taskPriorityContainer);
+        
+        if (task !== undefined) {
+            taskName.value = "as";
+            taskDescribe.value = "as";
+            taskDate.value = task[2]; 
+            console.log(task[2]);
+            taskPriority.value = "high";
+        }
 
         return divContainer;
     } 
@@ -245,13 +251,6 @@ const leftPanelContent = leftDOM.onloadLeft(projectList);
         return btnContainer;
     }    
      
-      
-        containerRHS.append( makeInputForm(), controlsAddEditTask() );
-
-
-
-
-
     
     const titleContainerRight = mainTitleRight(projectList[0]);
     const descriptionLabel = projectDescriptionLabel() ;   
@@ -259,8 +258,6 @@ const leftPanelContent = leftDOM.onloadLeft(projectList);
     const descriptionInput = editDescriptionUI();
     const buttonTask = taskMgeBtn ();
     const buttonAddTask = taskAddBtn();
-    
-
    
     //containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask);
     //containerRHS.append(titleContainerRight, descriptionLabel, descriptionInput, buttonTask);
@@ -269,7 +266,8 @@ const leftPanelContent = leftDOM.onloadLeft(projectList);
     //divContainer = showOneTask(item);
     //containerRHS.append(titleContainerRight, divContainer, buttonAddTask );
 
-
+    //containerRHS.append( makeInputForm(), controlsAddEditTask() );
+    containerRHS.append( makeInputForm( projectList[0].tasks[1] ), controlsAddEditTask() );
 
 
 
