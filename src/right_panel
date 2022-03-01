@@ -1,0 +1,4 @@
+import iPencil from "./img/326602_edit_pencil_icon.svg";
+// Creates DOM at left side
+//const leftDOM = (() => {
+

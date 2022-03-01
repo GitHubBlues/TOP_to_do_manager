@@ -93,7 +93,6 @@ const leftDOM = (() => {
         containerLHS.appendChild( part1 )
 
         const part2 = areaAddProject() ;    
-        console.log(part2);
         containerLHS.appendChild( part2 );
         
         const part3 = radialBtnsMenu.makeRadialMenu() ;
