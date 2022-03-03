@@ -28,8 +28,7 @@ const leftDOM = (() => {
 
         return ctProjects;
     }
-
-
+    
     function _showProjects(projectList, ctProjects){
       
         for (const item of projectList) {
@@ -70,6 +69,25 @@ const leftDOM = (() => {
     }
 
 
+    function areaAddProjectInput(){
+        const containerAddBtn = document.createElement("div");
+        containerAddBtn.classList.add("add-project-container");
+
+        const btnAddProject = document.createElement("img");
+        btnAddProject.classList.add("btn-add-project");
+        btnAddProject.src = iAdd;
+
+        let inputBox = document.createElement("input");
+        inputBox.classList.add("input-box-add-project");
+        inputBox.placeholder = "Press enter";
+
+        containerAddBtn.appendChild(btnAddProject);
+        containerAddBtn.appendChild(inputBox);
+
+        return containerAddBtn;
+    }
+
+
     function areaDabatase(){
         const btnStorageContainer = document.createElement("div"); 
         btnStorageContainer.classList.add("storage-container");
@@ -102,8 +120,21 @@ const leftDOM = (() => {
         containerLHS.appendChild( part4 );
     }
 
+
+    function addProjectLoad(projectList) {
+        const part1 = areaProjects(projectList)
+        containerLHS.appendChild( part1 )
+        const part2 = areaAddProjectInput() ;    
+        containerLHS.appendChild( part2 );
+        const part3 = radialBtnsMenu.makeRadialMenu() ;
+        containerLHS.appendChild( part3 );
+        const part4 = areaDabatase();
+        containerLHS.appendChild( part4 );
+    }
+
     return { 
         onloadLeft,
+        addProjectLoad,
     }
 
 })();

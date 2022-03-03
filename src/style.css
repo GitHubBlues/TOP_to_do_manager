@@ -75,6 +75,7 @@ h2 {
 
 .project-names {
   margin: 0.5rem;
+  border: 2px solid green;
 }
 
 .icon-delete {
@@ -83,6 +84,7 @@ h2 {
   padding: 0.3rem;
   margin-left: 0.2rem;
   margin-right: 1rem;
+  border: 2px solid orange;
 }
 
 /* Add project button */
@@ -109,6 +111,16 @@ h2 {
   margin-top: 0.5rem;
   margin-bottom: 0rem;
 }
+
+.input-box-add-project {
+    display: flex;
+    height: 2rem;
+    width: 80%;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: medium;
+}
+
 
 /* Radial Button Menu */
 .radio-btn-container {
@@ -173,11 +185,13 @@ input[disabled] + label {
   padding: 0.3rem;
   margin-left: 0.2rem;
   margin-right: 1rem;
+  border: 4px solid yellow;
 }
 
 .label-icon-database {
   display: flex;
   align-items: center;
+  border: 4px solid yellow;
 }
 
 .storage-container {
@@ -185,6 +199,11 @@ input[disabled] + label {
   flex-direction: row;
   margin-top: 0rem;
   margin-bottom: 0.5rem;
+}
+
+.icon-database:hover,
+.label-icon-database:hover {
+    cursor: pointer;
 }
 
 /*****************************************************************************************/
@@ -255,6 +274,12 @@ input[disabled] + label {
 }
 
 /* Display Tasks */
+.all-tasks-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
 .task-item-container {
   display: flex;
   flex-direction: row;
@@ -308,7 +333,7 @@ input[disabled] + label {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 2rem 0rem 0rem 0rem;
+  margin: 0rem 0rem 0rem 0rem;
 }
 
 .container-task-input {
