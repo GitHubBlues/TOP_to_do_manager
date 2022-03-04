@@ -1,3 +1,5 @@
+import { callback_manageTasks } from './index.js';
+
 const radialBtnsMenu = (() => {
  
     function makeRadialMenu() {
@@ -90,10 +92,29 @@ const radialBtnsMenu = (() => {
     }
 
     
-    function processTasksToShow() {
-        // check radial Menu input --> another function
-        // identify the tasks to show 
-        // return these tasks
+    function processTasksToShow(tasks) {
+        let radialStatus = get_radialButtonInput();  
+        
+        let tmp = tasks;
+
+        if (typeof tasks !== "undefined") {
+            
+            tmp = tasks.sort(function (a, b) {
+            return Number(a[5]) - Number(b[5]);
+            });
+
+            if (radialStatus[1] == true) {
+                tmp = tasks.filter(function (e) {
+                return e[5] == true;
+                });
+            } else if (radialStatus[2] == true) {
+                tmp = tasks.filter(function (e) {
+                return e[5] == false;
+                });
+            }
+        } 
+
+        return tmp     
 
     }
 
@@ -106,6 +127,7 @@ const radialBtnsMenu = (() => {
         rdBtnAll.disabled = false;
         rdBtnFinished.disabled = false;
         rdBtnPending.disabled = false;
+        console.log("run");
     }
 
 
@@ -132,11 +154,9 @@ const radialBtnsMenu = (() => {
 
 
     function callback_radialButtons() {
-        console.log(e.target);
-        // get radial input --> based on another function
-        // identify tasks to show --> based on another function
-        // display new tasks instead of old ones --> based on another function
-        // no return
+        const radialStatus = get_radialButtonInput();
+
+        callback_manageTasks();
     }
 
 
@@ -144,8 +164,10 @@ const radialBtnsMenu = (() => {
         makeRadialMenu,
         listenerRadialMenu,
         get_radialButtonInput,
+        processTasksToShow,
         enableRadianButtons, 
         disableRadianButtons,
+        callback_radialButtons,
     }
 
 })();

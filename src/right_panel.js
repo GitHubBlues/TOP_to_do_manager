@@ -67,11 +67,11 @@ const rightDOM = (() => {
     function showAllTasks(project) { 
         const divContainer = document.createElement("div");
         divContainer.classList.add("all-tasks-container");
-        console.log(project.tasks);
-        console.log(project.tasks.length);
+        
+        let tasks = radialBtnsMenu.processTasksToShow(project.tasks);
 
         let onetask
-        project.tasks.forEach(item => {
+        tasks.forEach(item => {
             let onetask = _showOneTask(item);
             divContainer.appendChild(onetask);
         })

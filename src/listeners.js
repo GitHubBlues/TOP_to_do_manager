@@ -10,6 +10,7 @@ import { callback_showProjectDetails,
     callback_cancelEditDescription,
     callback_saveDescription,
     callback_manageTasks,
+    callback_checkbox,
     callback_editTask,
     callback_saveEditedTask,
     callback_deleteTasks,
@@ -66,6 +67,11 @@ const addListeners = (() => {
         const icon = document.querySelector(".btn-manage-tasks");
         icon.addEventListener("click", callback_manageTasks);
     }
+ 
+    function listenerCheckbox(){
+        const checkbox = document.querySelectorAll(".checkbox-tasks");
+        checkbox.forEach(item => { item.addEventListener("change", callback_checkbox)});
+    }   
 
     function listenerEditTask() {
         const icon = document.querySelectorAll(".icon-edit-task");
@@ -108,6 +114,7 @@ const addListeners = (() => {
         listenerSaveDescription,
         listenerCancelEditDescription,
         listenerManageTasks,
+        listenerCheckbox,
         listenerEditTask,
         listenerDeleteTasks,
         listenerAddTasks,

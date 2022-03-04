@@ -25,7 +25,8 @@ addListeners.listenerDatabase();
 addListeners.listenerDeleteProject();
 addListeners.listenerShowProjectDescription();
 addListeners.listenerAddProject();
-
+radialBtnsMenu.listenerRadialMenu();
+// radialBtnsMenu.enableRadianButtons
 // addListeners.listenerEditProjectDescription();
 // addListeners.listenerManageTasks();
 // addListeners.listenerEditTask();
@@ -245,6 +246,34 @@ function callback_manageTasks() {
     addListeners.listenerEditTask();
     addListeners.listenerDeleteTasks();
     addListeners.listenerAddTasks();
+    addListeners.listenerCheckbox();
+
+    radialBtnsMenu.enableRadianButtons();
+}
+
+function callback_checkbox(e){
+    console.log("test");
+    const titleContainerRight = document.querySelector(".title-panel-right");
+    const checkStatus = e.target.checked;
+    const target = e.target.parentElement.children[1].firstChild.innerHTML;
+    
+    const projectName = titleContainerRight.innerText;
+    let index;
+
+    for (const item of projectList){
+        if (item.name == projectName) {
+            let tasks = item.tasks;
+            let taskNames = tasks.map(x => x[0]);
+            index = taskNames.indexOf(target);
+            let task = item.tasks[index];
+            task[5] =  checkStatus;
+            item.tasks[index] = task;
+        }
+    }
+    console.log(projectList);
+    if (storageAvailable("localStorage")) {
+        localStorage.setItem("projectList", JSON.stringify(projectList));
+   } 
 }
 
 function callback_editTask(e) {
@@ -272,6 +301,8 @@ function callback_editTask(e) {
     containerRHS.append( titleContainerRight, rightDOM.makeInputForm( myTask ), rightDOM.controlsAddEditTask() );
     addListeners.listenerSaveEditedTask();
     addListeners.listenerCancelEditTasks();
+
+    radialBtnsMenu.disableRadianButtons();
 }
 
 function callback_deleteTasks(e) {
@@ -327,6 +358,7 @@ function callback_addTasks() {
     
     addListeners.listenerSaveNewTask();
     addListeners.listenerCancelEditTasks();
+    radialBtnsMenu.disableRadianButtons();
 }
 
 
@@ -473,6 +505,7 @@ export { callback_showProjectDetails,
         callback_cancelEditDescription,
         callback_saveDescription,
         callback_manageTasks,
+        callback_checkbox,
         callback_editTask,
         callback_saveEditedTask,
         callback_deleteTasks,
