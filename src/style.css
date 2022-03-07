@@ -75,7 +75,6 @@ h2 {
 
 .project-names {
   margin: 0.5rem;
-  border: 2px solid green;
 }
 
 .icon-delete {
@@ -84,7 +83,6 @@ h2 {
   padding: 0.3rem;
   margin-left: 0.2rem;
   margin-right: 1rem;
-  border: 2px solid orange;
 }
 
 /* Add project button */
@@ -112,7 +110,11 @@ h2 {
   align-items: center;
 }
 
-
+.input-and-notice-container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
 
 .input-box-add-project {
   display: flex;
@@ -121,12 +123,12 @@ h2 {
   margin-top: auto;
   margin-bottom: auto;
   font-size: medium;
+  border: 2px solid green;
 }
 
 .notice {
-  font-size: small;  
+  font-size: small;
 }
-
 
 /* Radial Button Menu */
 .radio-btn-container {
@@ -191,13 +193,11 @@ input[disabled] + label {
   padding: 0.3rem;
   margin-left: 0.2rem;
   margin-right: 1rem;
-  border: 4px solid yellow;
 }
 
 .label-icon-database {
   display: flex;
   align-items: center;
-  border: 4px solid yellow;
 }
 
 .storage-container {
@@ -209,7 +209,7 @@ input[disabled] + label {
 
 .icon-database:hover,
 .label-icon-database:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /*****************************************************************************************/
@@ -239,8 +239,7 @@ input[disabled] + label {
   justify-content: space-between;
   width: 100%;
   padding: 0.3rem 0rem;
-  border: 4px solid blue;
-}
+ }
 
 .label-describe-project {
   display: flex;
@@ -258,11 +257,13 @@ input[disabled] + label {
 .text-description-project {
   color: rgba(180, 180, 180, 1);
   width: 100%;
-  height: 5rem;
+  height: 10rem;
   margin-top: 0.5rem;
   line-height: 1.5;
   font-size: large;
   border: 1px solid black;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 .input-project-description {
@@ -280,7 +281,7 @@ input[disabled] + label {
 }
 
 /* Display Tasks */
-.all-tasks-container{
+.all-tasks-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -332,7 +333,7 @@ input[disabled] + label {
   width: 1.3rem;
   height: auto;
   padding: 0.3rem;
-} 
+}
 
 /* Add/Edit tasks */
 .add-task-container {
