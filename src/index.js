@@ -55,7 +55,7 @@ function callback_showProjectDetails(e) {
     const buttonAddTask = rightDOM.taskAddBtn();
    
     containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask);
-    addListeners.listenerEditProjectDescription();
+    addListeners.listenerEditProjectDescription(selectedProject);
     addListeners.listenerManageTasks();
 }
 
@@ -68,13 +68,14 @@ function callback_deleteProject(e) {
     deleteChildNodes(panelLHS);
 
     let projectName = e.target.previousSibling.firstChild.data;
+    console.log(projectName);
 
     let i=0;
     for (const item of projectList){
         if (item.name == projectName) {
             projectList.splice(i,1); 
         }
-        i =+ 1;
+        i += 1;
     }
     
     if (storageAvailable("localStorage")) {
@@ -160,10 +161,10 @@ function callback_editProjectDescription() {
            selectedProject = item;
         }
     }
-    
+    console.log(selectedProject);
     const titContainerRight = rightDOM.mainTitleRight(selectedProject);
-    const descriptionLabel = rightDOM.projectDescriptionLabel() ;   
-    const descriptionInput = rightDOM.editDescriptionUI();
+    const descriptionLabel = rightDOM.projectDescriptionLabel();   
+    const descriptionInput = rightDOM.editDescriptionUI(selectedProject);
     const buttonTask = rightDOM.controlsAddEditTask();
    
     deleteChildNodes(containerRHS);
@@ -213,6 +214,10 @@ function callback_saveDescription() {
         }
     }
     
+    if (storageAvailable("localStorage")) {
+        localStorage.setItem("projectList", JSON.stringify(projectList));
+    } 
+
     deleteChildNodes(containerRHS);
 
     const descriptionLabel = rightDOM.projectDescriptionLabel() ;   

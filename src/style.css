@@ -88,6 +88,13 @@ h2 {
 }
 
 /* Add project button */
+.add-project-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 0.5rem;
+  margin-bottom: 0rem;
+}
+
 .btn-add-project {
   border: 2px solid green;
   height: 1.5rem;
@@ -105,20 +112,19 @@ h2 {
   align-items: center;
 }
 
-.add-project-container {
-  display: flex;
-  flex-direction: row;
-  margin-top: 0.5rem;
-  margin-bottom: 0rem;
-}
+
 
 .input-box-add-project {
-    display: flex;
-    height: 2rem;
-    width: 80%;
-    margin-top: auto;
-    margin-bottom: auto;
-    font-size: medium;
+  display: flex;
+  height: 2rem;
+  width: 80%;
+  margin-top: auto;
+  margin-bottom: auto;
+  font-size: medium;
+}
+
+.notice {
+  font-size: small;  
 }
 
 
@@ -264,7 +270,7 @@ input[disabled] + label {
   width: calc(100% - 1.5rem);
   margin-top: 0.5rem;
   line-height: 1.5;
-  height: 6rem;
+  height: 8rem;
   background-color: beige;
   box-shadow: inset 0px 0px 0.25rem green;
   padding: 0.6rem;

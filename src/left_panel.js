@@ -77,13 +77,21 @@ const leftDOM = (() => {
         btnAddProject.classList.add("btn-add-project");
         btnAddProject.src = iAdd;
 
+        let container = document.createElement("div");
+        container.classList.add("input-and-notice-container");
+        
         let inputBox = document.createElement("input");
         inputBox.classList.add("input-box-add-project");
         inputBox.placeholder = "Press enter";
 
-        containerAddBtn.appendChild(btnAddProject);
-        containerAddBtn.appendChild(inputBox);
+        let notice = document.createElement("div");
+        notice.classList.add("notice");
+        notice.innerHTML = "**Press enter for saving new project"
 
+        // containerAddBtn.appendChild(btnAddProject);
+        // containerAddBtn.appendChild(inputBox);
+        container.append(inputBox, notice);
+        containerAddBtn.append(btnAddProject, container);
         return containerAddBtn;
     }
 

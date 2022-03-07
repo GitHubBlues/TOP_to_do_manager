@@ -57,10 +57,17 @@ const rightDOM = (() => {
     } 
 
 
-    function editDescriptionUI(){
+    function editDescriptionUI(project){
+        console.log(project);
         const descriptionInput = document.createElement("textarea");
         descriptionInput.classList.add("input-project-description");
         
+        if (project.describe.length == 0) {
+            descriptionInput.innerHTML = "";
+        } else{
+            descriptionInput.innerHTML = project.describe;
+        }
+
         return descriptionInput;
     }    
 
