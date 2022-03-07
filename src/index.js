@@ -86,6 +86,7 @@ function callback_deleteProject(e) {
 
     addListeners.listenerDatabase();
     addListeners.listenerDeleteProject();
+    addListeners.listenerShowProjectDescription();
 }
 
 
