@@ -1,519 +1,391 @@
-import './style.css';
-import { storageAvailable, projectsOnLoad } from './storage.js';
-import { projectDB } from "./projects.js";
-import { format, compareAsc } from 'date-fns';
+import './style.css'
 
-import radialBtnsMenu  from './radialButtons.js';
-import leftDOM from './left_panel.js';
-import rightDOM from './right_panel.js';
-import addListeners from './listeners.js';
+import { storageAvailable, projectsOnLoad } from './storage.js'
+import { projectDB } from './projects.js'
 
-import iDelete from "./img/3643729_delete_trash_icon.svg";
-import iPencil from "./img/326602_edit_pencil_icon.svg";
-import iDatabase from "./img/185097_database_icon.svg";
-import iAdd from "./img/172525_plus_icon.svg";
-import iFlag0 from "./img/2561440_flag_icon_light.svg";
-import iFlag1 from "./img/2561440_flag_icon_medium.svg";
-import iFlag2 from "./img/2561440_flag_icon_dark.svg";
+import radialBtnsMenu from './radialButtons.js'
+import leftDOM from './left_panel.js'
+import rightDOM from './right_panel.js'
+import addListeners from './listeners.js'
 
-const containerLHS = document.querySelector(".container-left");
+const containerLHS = document.querySelector('.container-left')
 
-
-let projectList = projectsOnLoad();
+let projectList = projectsOnLoad()
 const leftPanelContent = leftDOM.onloadLeft(projectList);
-addListeners.listenerDatabase();
-addListeners.listenerDeleteProject();
-addListeners.listenerShowProjectDescription();
-addListeners.listenerAddProject();
-radialBtnsMenu.listenerRadialMenu();
-// radialBtnsMenu.enableRadianButtons
-// addListeners.listenerEditProjectDescription();
-// addListeners.listenerManageTasks();
-// addListeners.listenerEditTask();
-// addListeners.listenerDeleteTasks();
-// addListeners.listenerAddTasks();
-// addListeners.listenerSaveTask();
-// addListeners.listenerCancelEditTasks();
-
+addListeners.listenerDatabase()
+addListeners.listenerDeleteProject()
+addListeners.listenerShowProjectDescription()
+addListeners.listenerAddProject()
+radialBtnsMenu.listenerRadialMenu()
 
 function callback_showProjectDetails(e) {
-    const containerRHS = document.querySelector(".container-right");
-    deleteChildNodes(containerRHS);
+    const containerRHS = document.querySelector('.container-right')
+    deleteChildNodes(containerRHS)
+
+    const projectName = e.target.innerText
+    let selectedProject = get_selectedProject(projectName)[0];
     
-    const projectName = e.target.innerText;
-    let selectedProject 
-    for (const item of projectList) {
-        if (item.name == projectName){
-           selectedProject = item;
-        }
-    }
+    const titleContainerRight = rightDOM.mainTitleRight(selectedProject)
+    const descriptionLabel = rightDOM.projectDescriptionLabel()
+    const description = rightDOM.displayDescription(selectedProject)
+    const buttonTask = rightDOM.taskMgeBtn()
 
-    const titleContainerRight = rightDOM.mainTitleRight(selectedProject);
-    const descriptionLabel = rightDOM.projectDescriptionLabel() ;   
-    const description = rightDOM.displayDescription(selectedProject);
-    const buttonTask = rightDOM.taskMgeBtn ();
-    const buttonAddTask = rightDOM.taskAddBtn();
-   
-    containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask);
-    addListeners.listenerEditProjectDescription(selectedProject);
-    addListeners.listenerManageTasks();
+    containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask)
+    addListeners.listenerEditProjectDescription(selectedProject)
+    addListeners.listenerManageTasks()
 }
-
 
 function callback_deleteProject(e) {
-    const panelRHS = document.querySelector(".container-right");
-    const panelLHS = document.querySelector(".container-left");
+    const panelRHS = document.querySelector('.container-right')
+    const panelLHS = document.querySelector('.container-left')
 
-    deleteChildNodes(panelRHS);
-    deleteChildNodes(panelLHS);
+    deleteChildNodes(panelRHS)
+    deleteChildNodes(panelLHS)
 
-    let projectName = e.target.previousSibling.firstChild.data;
-    console.log(projectName);
+    let projectName = e.target.previousSibling.firstChild.data
 
-    let i=0;
-    for (const item of projectList){
+    let i = 0
+    for (const item of projectList) {
         if (item.name == projectName) {
-            projectList.splice(i,1); 
+            projectList.splice(i, 1)
         }
-        i += 1;
-    }
-    
-    if (storageAvailable("localStorage")) {
-          localStorage.setItem("projectList", JSON.stringify(projectList));
+        i += 1
     }
 
-    leftDOM.onloadLeft(projectList);
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('projectList', JSON.stringify(projectList))
+    }
 
-    addListeners.listenerDatabase();
-    addListeners.listenerDeleteProject();
-    addListeners.listenerShowProjectDescription();
+    leftDOM.onloadLeft(projectList)
+
+    addListeners.listenerDatabase()
+    addListeners.listenerDeleteProject()
+    addListeners.listenerShowProjectDescription()
 }
-
 
 function callback_addProject() {
-    const panelRHS = document.querySelector(".container-right");
-    const panelLHS = document.querySelector(".container-left");
+    const panelRHS = document.querySelector('.container-right')
+    const panelLHS = document.querySelector('.container-left')
 
-    deleteChildNodes(panelRHS);
-    deleteChildNodes(panelLHS);
-    
-    leftDOM.addProjectLoad(projectList);
-    addListeners.listenerAddProject();
-    addListeners.listenerInputAddProject();
+    deleteChildNodes(panelRHS)
+    deleteChildNodes(panelLHS)
+
+    leftDOM.addProjectLoad(projectList)
+    addListeners.listenerAddProject()
+    addListeners.listenerInputAddProject()
 }
-
 
 function callback_inputAddProject(e) {
     if (e.key === 'Enter') {
-        const newProject = document.querySelector(".input-box-add-project");
-        
-        let proj= projectDB();
-        proj.name = newProject.value;
-        proj.describe = "";
-        projectList.push(proj);
-    
-        console.log(projectList);
+        const newProject = document.querySelector('.input-box-add-project')
 
+        let proj = projectDB()
+        proj.name = newProject.value
+        proj.describe = ''
+        projectList.push(proj)
 
-        if (storageAvailable("localStorage")) {
-            localStorage.setItem("projectList", JSON.stringify(projectList));
+        if (storageAvailable('localStorage')) {
+            localStorage.setItem('projectList', JSON.stringify(projectList))
         }
 
-        const panelLHS = document.querySelector(".container-left");
-        deleteChildNodes(panelLHS);     
-        const leftPanelContent = leftDOM.onloadLeft(projectList);
-        addListeners.listenerDatabase();
-        addListeners.listenerDeleteProject();
-        addListeners.listenerShowProjectDescription();
-        addListeners.listenerAddProject();   
+        const panelLHS = document.querySelector('.container-left')
+        deleteChildNodes(panelLHS)
+
+        const leftPanelContent = leftDOM.onloadLeft(projectList)
+        addListeners.listenerDatabase()
+        addListeners.listenerDeleteProject()
+        addListeners.listenerShowProjectDescription()
+        addListeners.listenerAddProject()
     }
-
 }
-
 
 function callback_resetDatabase() {
-    const panelRHS = document.querySelector(".container-right");
-    const panelLHS = document.querySelector(".container-left");
+    const panelRHS = document.querySelector('.container-right')
+    const panelLHS = document.querySelector('.container-left')
 
-    deleteChildNodes(panelRHS);
-    deleteChildNodes(panelLHS);
+    deleteChildNodes(panelRHS)
+    deleteChildNodes(panelLHS)
 
-    _resetDatabase();
-    projectList = projectsOnLoad();
+    _resetDatabase()
+    projectList = projectsOnLoad()
 
-    leftDOM.onloadLeft(projectList);
+    leftDOM.onloadLeft(projectList)
 
-    addListeners.listenerDatabase();
-    addListeners.listenerDeleteProject();
-    addListeners.listenerShowProjectDescription();
-
+    addListeners.listenerDatabase()
+    addListeners.listenerDeleteProject()
+    addListeners.listenerShowProjectDescription()
 }
-
 
 function callback_editProjectDescription() {
-    const containerRHS = document.querySelector(".container-right");
-    const panelLHS = document.querySelector(".container-left");
-    const titleContainerRight = document.querySelector(".title-panel-right");
-    const projectName = titleContainerRight.innerHTML;
-        
-    let selectedProject 
-    for (const item of projectList) {
-        if (item.name == projectName){
-           selectedProject = item;
-        }
-    }
-    console.log(selectedProject);
-    const titContainerRight = rightDOM.mainTitleRight(selectedProject);
-    const descriptionLabel = rightDOM.projectDescriptionLabel();   
-    const descriptionInput = rightDOM.editDescriptionUI(selectedProject);
-    const buttonTask = rightDOM.controlsAddEditTask();
-   
-    deleteChildNodes(containerRHS);
+    const containerRHS = document.querySelector('.container-right')
+    const panelLHS = document.querySelector('.container-left')
+    const titleContainerRight = document.querySelector('.title-panel-right')
+    const projectName = titleContainerRight.innerHTML
 
-    containerRHS.append(titContainerRight, descriptionLabel, descriptionInput, buttonTask);
+    let selectedProject = get_selectedProject(projectName)[0]
 
-    addListeners.listenerSaveDescription();
-    addListeners.listenerCancelEditDescription();
+    const titContainerRight = rightDOM.mainTitleRight(selectedProject)
+    const descriptionLabel = rightDOM.projectDescriptionLabel()
+    const descriptionInput = rightDOM.editDescriptionUI(selectedProject)
+    const buttonTask = rightDOM.controlsAddEditTask()
+
+    deleteChildNodes(containerRHS)
+
+    containerRHS.append(titContainerRight, descriptionLabel, descriptionInput, buttonTask)
+
+    addListeners.listenerSaveDescription()
+    addListeners.listenerCancelEditDescription()
 }
 
-
 function callback_cancelEditDescription() {
-    const containerRHS = document.querySelector(".container-right");
-    const titleContainerRight = document.querySelector(".title-panel-right");
-    const projectName = titleContainerRight.innerHTML;
-    
-    deleteChildNodes(containerRHS);
-    
-    let selectedProject 
-    for (const item of projectList) {
-        if (item.name == projectName){
-           selectedProject = item;
-        }
-    }
+    const containerRHS = document.querySelector('.container-right')
+    const titleContainerRight = document.querySelector('.title-panel-right')
+    const projectName = titleContainerRight.innerHTML
 
-    const descriptionLabel = rightDOM.projectDescriptionLabel() ;   
-    const description = rightDOM.displayDescription(selectedProject);
-    const buttonTask = rightDOM.taskMgeBtn ();
-       
-    containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask);
-    addListeners.listenerEditProjectDescription();
+    deleteChildNodes(containerRHS)
+
+    let selectedProject = get_selectedProject(projectName)[0]
+
+    const descriptionLabel = rightDOM.projectDescriptionLabel()
+    const description = rightDOM.displayDescription(selectedProject)
+    const buttonTask = rightDOM.taskMgeBtn()
+
+    containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask)
+    addListeners.listenerEditProjectDescription()
 }
 
 function callback_saveDescription() {
-    const containerRHS = document.querySelector(".container-right");
-    let titleContainerRight = document.querySelector(".title-panel-right");
-    const projectName = titleContainerRight.innerHTML;
-    
-    let inputField = document.querySelector(".input-project-description");
-    let descript = inputField.value;
-    
-    let selectedProject 
-    for (const item of projectList) {
-        if (item.name == projectName){
-            item.describe = descript;  
-            selectedProject = item;
-        }
+    const containerRHS = document.querySelector('.container-right')
+    let titleContainerRight = document.querySelector('.title-panel-right')
+    const projectName = titleContainerRight.innerHTML
+
+    let inputField = document.querySelector('.input-project-description')
+    let descript = inputField.value
+
+    let selectedProject = get_selectedProject(projectName)[0]
+    selectedProject.describe = descript
+
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('projectList', JSON.stringify(projectList))
     }
-    
-    if (storageAvailable("localStorage")) {
-        localStorage.setItem("projectList", JSON.stringify(projectList));
-    } 
 
-    deleteChildNodes(containerRHS);
+    deleteChildNodes(containerRHS)
 
-    const descriptionLabel = rightDOM.projectDescriptionLabel() ;   
-    const description = rightDOM.displayDescription(selectedProject);
-    const buttonTask = rightDOM.taskMgeBtn ();
-   
-    containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask);
-    addListeners.listenerEditProjectDescription();
-    addListeners.listenerManageTasks();
+    const descriptionLabel = rightDOM.projectDescriptionLabel()
+    const description = rightDOM.displayDescription(selectedProject)
+    const buttonTask = rightDOM.taskMgeBtn()
+
+    containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask)
+    addListeners.listenerEditProjectDescription()
+    addListeners.listenerManageTasks()
 }
 
 function callback_manageTasks() {
-    const containerRHS = document.querySelector(".container-right");
-    let titleContainerRight = document.querySelector(".title-panel-right");
-    const projectName = titleContainerRight.innerHTML;
-    let selectedProject 
-    
-    for (const item of projectList) {
-        if (item.name == projectName){
-           selectedProject = item;
-        }
-    }
-    
-    titleContainerRight = rightDOM.mainTitleRight(selectedProject);
+    const containerRHS = document.querySelector('.container-right')
+    let titleContainerRight = document.querySelector('.title-panel-right')
 
-    deleteChildNodes(containerRHS);
+    const projectName = titleContainerRight.innerHTML
+    let selectedProject = get_selectedProject(projectName)[0]
 
-    const allTasks = rightDOM.showAllTasks(selectedProject);
-        
-    containerRHS.append( titleContainerRight, allTasks, rightDOM.taskAddBtn() );
-    addListeners.listenerEditTask();
-    addListeners.listenerDeleteTasks();
-    addListeners.listenerAddTasks();
-    addListeners.listenerCheckbox();
+    titleContainerRight = rightDOM.mainTitleRight(selectedProject)
 
-    radialBtnsMenu.enableRadianButtons();
+    deleteChildNodes(containerRHS)
+
+    const allTasks = rightDOM.showAllTasks(selectedProject)
+
+    containerRHS.append(titleContainerRight, allTasks, rightDOM.taskAddBtn())
+    addListeners.listenerEditTask()
+    addListeners.listenerDeleteTasks()
+    addListeners.listenerAddTasks()
+    addListeners.listenerCheckbox()
+
+    radialBtnsMenu.enableRadianButtons()
 }
 
-function callback_checkbox(e){
-    console.log("test");
-    const titleContainerRight = document.querySelector(".title-panel-right");
-    const checkStatus = e.target.checked;
-    const target = e.target.parentElement.children[1].firstChild.innerHTML;
-    
-    const projectName = titleContainerRight.innerText;
-    let index;
+function callback_checkbox(e) {
+    const checkStatus = e.target.checked
+    const target = e.target.parentElement.children[1].firstChild.innerHTML
 
-    for (const item of projectList){
+    const titleContainerRight = document.querySelector('.title-panel-right')
+    const projectName = titleContainerRight.innerText
+    let index
+
+    for (const item of projectList) {
         if (item.name == projectName) {
-            let tasks = item.tasks;
-            let taskNames = tasks.map(x => x[0]);
-            index = taskNames.indexOf(target);
-            let task = item.tasks[index];
-            task[5] =  checkStatus;
-            item.tasks[index] = task;
+            let tasks = item.tasks
+            let taskNames = tasks.map((x) => x[0])
+            index = taskNames.indexOf(target)
+            let task = item.tasks[index]
+            task[5] = checkStatus
+            item.tasks[index] = task
         }
     }
-    console.log(projectList);
-    if (storageAvailable("localStorage")) {
-        localStorage.setItem("projectList", JSON.stringify(projectList));
-   } 
+
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('projectList', JSON.stringify(projectList))
+    }
 }
 
 function callback_editTask(e) {
-    const taskName = e.target.parentElement.parentElement.childNodes[0].innerText;
-    const containerRHS = document.querySelector(".container-right");
-    const titleContainerRight = document.querySelector(".title-panel-right");
-    const projectName = titleContainerRight.innerHTML;
-    
-    let myTask;
-    for (const item of projectList){
-        
-        if (item.name == projectName) {
+    const taskName = e.target.parentElement.parentElement.childNodes[0].innerText
+    const containerRHS = document.querySelector('.container-right')
+    const titleContainerRight = document.querySelector('.title-panel-right')
+    const projectName = titleContainerRight.innerHTML
 
-            for (let i=0; i<item.tasks.length; i++){
-                if (item.tasks[i][0] == taskName){
-                    item.tasks[i][4] = "x"; 
-                    myTask = item.tasks[i]; 
+    let myTask
+    for (const item of projectList) {
+        if (item.name == projectName) {
+            for (let i = 0; i < item.tasks.length; i++) {
+                if (item.tasks[i][0] == taskName) {
+                    item.tasks[i][4] = 'x'
+                    myTask = item.tasks[i]
                 }
             }
         }
     }
-    -
-    deleteChildNodes(containerRHS);
-    
-    containerRHS.append( titleContainerRight, rightDOM.makeInputForm( myTask ), rightDOM.controlsAddEditTask() );
-    addListeners.listenerSaveEditedTask();
-    addListeners.listenerCancelEditTasks();
 
-    radialBtnsMenu.disableRadianButtons();
+    deleteChildNodes(containerRHS)
+
+    containerRHS.append(titleContainerRight, rightDOM.makeInputForm(myTask), rightDOM.controlsAddEditTask())
+    addListeners.listenerSaveEditedTask()
+    addListeners.listenerCancelEditTasks()
+
+    radialBtnsMenu.disableRadianButtons()
 }
 
 function callback_deleteTasks(e) {
-    let selected = e.target.parentNode.parentNode.firstChild.innerText;
-    
-    const containerRHS = document.querySelector(".container-right");
-    const titleContainerRight = document.querySelector(".title-panel-right");
-    const projectName = titleContainerRight.innerHTML;
-    
-    // let i = 0;
-    // for (const item of tasks){
-    //     if (item[0] == selected) {
-    //         tasks.splice(i,1); 
-    //     }
-    //     i += 1; 
-    // }
-    
+    let selected = e.target.parentNode.parentNode.firstChild.innerText
 
+    const containerRHS = document.querySelector('.container-right')
+    const titleContainerRight = document.querySelector('.title-panel-right')
+    const projectName = titleContainerRight.innerHTML
 
-
-
-    let myTask;
-    for (const item of projectList){
-        
+    for (const item of projectList) {
         if (item.name == projectName) {
-
-            for (let i=0; i<item.tasks.length; i++){
-
+            for (let i = 0; i < item.tasks.length; i++) {
                 if (item.tasks[i][0] == selected) {
-                    item.tasks.splice(i,1); 
+                    item.tasks.splice(i, 1)
                 }
             }
         }
     }
 
-
-    if (storageAvailable("localStorage")) {
-          localStorage.setItem("projectList", JSON.stringify(projectList));
+    if (storageAvailable('localStorage')) {
+        localStorage.setItem('projectList', JSON.stringify(projectList))
     }
-    
-    callback_manageTasks();
-}
 
+    callback_manageTasks()
+}
 
 function callback_addTasks() {
-    const containerRHS = document.querySelector(".container-right");
-    const titleContainerRight = document.querySelector(".title-panel-right");
-    
-    deleteChildNodes(containerRHS);
-    
-    
-    containerRHS.append( titleContainerRight, rightDOM.makeInputForm(), rightDOM.controlsAddEditTask());
-    
-    addListeners.listenerSaveNewTask();
-    addListeners.listenerCancelEditTasks();
-    radialBtnsMenu.disableRadianButtons();
+    const containerRHS = document.querySelector('.container-right')
+    const titleContainerRight = document.querySelector('.title-panel-right')
+
+    deleteChildNodes(containerRHS)
+
+    containerRHS.append(titleContainerRight, rightDOM.makeInputForm(), rightDOM.controlsAddEditTask())
+
+    addListeners.listenerSaveNewTask()
+    addListeners.listenerCancelEditTasks()
+    radialBtnsMenu.disableRadianButtons()
 }
 
-
 function callback_saveNewTask() {
-    const taskName = document.querySelector(".input-task-name");
-    const taskDescribe = document.querySelector(".input-task-describe");
-    const taskDate = document.querySelector(".input-task-date");
-    const taskPriority = document.querySelector(".input-task-priority");
-    
-    const titleContainerRight = document.querySelector(".title-panel-right");
-    const projectName = titleContainerRight.innerHTML;
-    
-    if (taskName.value.trim().length>0){
+    const taskName = document.querySelector('.input-task-name')
+    const taskDescribe = document.querySelector('.input-task-describe')
+    const taskDate = document.querySelector('.input-task-date')
+    const taskPriority = document.querySelector('.input-task-priority')
 
-        for (let item of projectList){
+    const titleContainerRight = document.querySelector('.title-panel-right')
+    const projectName = titleContainerRight.innerHTML
 
-            if (item.name == projectName){
-                
-                let dataset;
-                                  
-                dataset = [taskName.value, taskDescribe.value, taskDate.value, taskPriority.value, "OK"];
-                    
-                if (taskDate.value === ""){
-                    dataset[2] = "2099-12-31";
-                    alert("No date entered. Default 31/12/2099 was used");
-                } 
+    if (taskName.value.trim().length > 0) {
+        for (let item of projectList) {
+            if (item.name == projectName) {
+                let dataset = [taskName.value, taskDescribe.value, taskDate.value, taskPriority.value, 'OK']
 
-                item.tasks.push(dataset); 
-                console.log(item.tasks);
-                if (storageAvailable("localStorage")) {
-                    localStorage.setItem("projectList", JSON.stringify(projectList));
+                if (taskDate.value === '') {
+                    dataset[2] = '2099-12-31'
+                    alert('No date entered. Default 31/12/2099 was used')
+                }
+
+                item.tasks.push(dataset)
+
+                if (storageAvailable('localStorage')) {
+                    localStorage.setItem('projectList', JSON.stringify(projectList))
                 }
             }
         }
-        
     } else {
-        alert("New task needs to be assigned a name");
+        alert('New task needs to be assigned a name')
     }
-    
-    callback_manageTasks();
 
+    callback_manageTasks()
 }
-
 
 function callback_saveEditedTask() {
-    const taskName = document.querySelector(".input-task-name");
-    const taskDescribe = document.querySelector(".input-task-describe");
-    const taskDate = document.querySelector(".input-task-date");
-    const taskPriority = document.querySelector(".input-task-priority");
-    
-    console.log(taskPriority.value);
-    if (taskName.value.trim().length>0){
+    const taskName = document.querySelector('.input-task-name')
+    const taskDescribe = document.querySelector('.input-task-describe')
+    const taskDate = document.querySelector('.input-task-date')
+    const taskPriority = document.querySelector('.input-task-priority')
 
-        for (let item of projectList){
+    if (taskName.value.trim().length > 0) {
+        for (let item of projectList) {
+            for (let i = 0; i < item.tasks.length; i++) {
+                let dataset
+                if (item.tasks[i][4] == 'x') {
+                    dataset = [taskName.value, taskDescribe.value, taskDate.value, taskPriority.value, 'OK']
+                    dataset[5] = item.tasks[i][5]
 
-            for (let i=0; i<item.tasks.length; i++){
-                
-                let dataset;
-                if (item.tasks[i][4] == "x"){
-                    
-                    dataset = [taskName.value, taskDescribe.value, taskDate.value, taskPriority.value, "OK"];
-                    dataset[5] = item.tasks[i][5]; 
+                    item.tasks[i] = dataset
 
-                    item.tasks[i] = dataset;
-
-                    if (storageAvailable("localStorage")) {
-                        localStorage.setItem("projectList", JSON.stringify(projectList));
+                    if (storageAvailable('localStorage')) {
+                        localStorage.setItem('projectList', JSON.stringify(projectList))
                     }
-                } 
+                }
             }
         }
-        
     } else {
-        alert("New task needs to be assigned a name");
+        alert('New task needs to be assigned a name')
     }
-    console.log(projectList);
-    callback_manageTasks();
+
+    callback_manageTasks()
 }
 
+function get_selectedProject(projectName) {
+    let selected = projectList.filter((item) => item.name == projectName)
 
-
-
-
-
-
+    return selected
+}
 
 function _resetDatabase() {
-    if (storageAvailable("localStorage")) {
-        window.localStorage.clear();
-        const projectLst = projectsOnLoad();
-        localStorage.setItem("projectList", JSON.stringify(projectLst));
+    if (storageAvailable('localStorage')) {
+        window.localStorage.clear()
+        const projectLst = projectsOnLoad()
+        localStorage.setItem('projectList', JSON.stringify(projectLst))
     }
 }
 
 function deleteChildNodes(node) {
     while (node.firstChild) {
-        node.removeChild(node.lastChild);
-      }
+        node.removeChild(node.lastChild)
+    }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-//const leftPanelContent = leftDOM.onloadLeft(projectList);
-
-//const containerRHS = document.querySelector(".container-right");
-
-  
-     
-    
-    // const titleContainerRight = rightDOM.mainTitleRight(projectList[0]);
-    // const descriptionLabel = rightDOM.projectDescriptionLabel() ;   
-    // const description = rightDOM.displayDescription(projectList[0]);
-    // const descriptionInput = rightDOM.editDescriptionUI();
-    // const buttonTask = rightDOM.taskMgeBtn ();
-    // const buttonAddTask = rightDOM.taskAddBtn();
-   
-    //containerRHS.append(titleContainerRight, descriptionLabel, description, buttonTask);
-    //containerRHS.append(titleContainerRight, descriptionLabel, descriptionInput, buttonTask);
-
-    //const item = projectList[0].tasks[1];
-    //const divContainer = rightDOM.showOneTask(item);
-    
-    //containerRHS.append(titleContainerRight, divContainer, buttonAddTask );
-
-    //containerRHS.append( rightDOM.makeInputForm(), rightDOM.controlsAddEditTask() );
-    //containerRHS.append( rightDOM.makeInputForm( projectList[0].tasks[1] ), rightDOM.controlsAddEditTask() );
-
-
-export { callback_showProjectDetails, 
-        callback_deleteProject, 
-        callback_addProject, 
-        callback_inputAddProject,
-        callback_resetDatabase,
-        callback_editProjectDescription,
-        callback_cancelEditDescription,
-        callback_saveDescription,
-        callback_manageTasks,
-        callback_checkbox,
-        callback_editTask,
-        callback_saveEditedTask,
-        callback_deleteTasks,
-        callback_addTasks,
-        callback_saveNewTask}
+export {
+    callback_showProjectDetails,
+    callback_deleteProject,
+    callback_addProject,
+    callback_inputAddProject,
+    callback_resetDatabase,
+    callback_editProjectDescription,
+    callback_cancelEditDescription,
+    callback_saveDescription,
+    callback_manageTasks,
+    callback_checkbox,
+    callback_editTask,
+    callback_saveEditedTask,
+    callback_deleteTasks,
+    callback_addTasks,
+    callback_saveNewTask,
+}

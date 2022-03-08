@@ -1,150 +1,136 @@
-import radialBtnsMenu from './radialButtons.js';
-import iDelete from "./img/3643729_delete_trash_icon.svg";
-import iDatabase from "./img/185097_database_icon.svg";
-import iAdd from "./img/172525_plus_icon.svg";
-
+import radialBtnsMenu from './radialButtons.js'
+import iDelete from './img/3643729_delete_trash_icon.svg'
+import iDatabase from './img/185097_database_icon.svg'
+import iAdd from './img/172525_plus_icon.svg'
 
 // Creates DOM at left side
 const leftDOM = (() => {
-    const containerLHS = document.querySelector(".container-left");
+    const containerLHS = document.querySelector('.container-left')
 
-    function areaProjects(projectList){
-        const ctProjects = document.createElement("div");
-        ctProjects.classList.add("left-container-projects");
-        
-        const title = document.createElement("h2");
-        title.classList.add("project-title");
-        title.innerHTML = "Projects";
-        
-        ctProjects.appendChild(title);
-        
-        const ctProjectList = document.createElement("div");
-        ctProjectList.classList.add("project-list");
+    function areaProjects(projectList) {
+        const ctProjects = document.createElement('div')
+        ctProjects.classList.add('left-container-projects')
 
-        _showProjects(projectList, ctProjects);
+        const title = document.createElement('h2')
+        title.classList.add('project-title')
+        title.innerHTML = 'Projects'
 
-        
-        ctProjects.appendChild(ctProjectList);
+        ctProjects.appendChild(title)
 
-        return ctProjects;
+        const ctProjectList = document.createElement('div')
+        ctProjectList.classList.add('project-list')
+
+        _showProjects(projectList, ctProjects)
+
+        ctProjects.appendChild(ctProjectList)
+
+        return ctProjects
     }
-    
-    function _showProjects(projectList, ctProjects){
-      
+
+    function _showProjects(projectList, ctProjects) {
         for (const item of projectList) {
-            const container = document.createElement('div');
-            container.classList.add("project-names-container");
-            const div = document.createElement('div'); 
-            div.classList.add("project-names");
-            div.innerHTML = item.name;
-            const icon = document.createElement("img");
-            icon.classList.add("icon-delete");
-            icon.src = iDelete;
-            
-            container.appendChild(div);
-            container.appendChild(icon);
-            ctProjects.appendChild(container);
-            
-            //icon.addEventListener('click', callback_deleteProject);
+            const container = document.createElement('div')
+            container.classList.add('project-names-container')
+            const div = document.createElement('div')
+            div.classList.add('project-names')
+            div.innerHTML = item.name
+            const icon = document.createElement('img')
+            icon.classList.add('icon-delete')
+            icon.src = iDelete
+
+            container.appendChild(div)
+            container.appendChild(icon)
+            ctProjects.appendChild(container)
         }
     }
 
+    function areaAddProject() {
+        const containerAddBtn = document.createElement('div')
+        containerAddBtn.classList.add('add-project-container')
 
-    function areaAddProject(){
-        const containerAddBtn = document.createElement("div");
-        containerAddBtn.classList.add("add-project-container");
+        const btnAddProject = document.createElement('img')
+        btnAddProject.classList.add('btn-add-project')
+        btnAddProject.src = iAdd
 
-        const btnAddProject = document.createElement("img");
-        btnAddProject.classList.add("btn-add-project");
-        btnAddProject.src = iAdd;
+        let labelAddBtn = document.createElement('div')
+        labelAddBtn.classList.add('label-btn-add-project')
+        labelAddBtn.innerText = 'New project'
 
-        let labelAddBtn = document.createElement("div");
-        labelAddBtn.classList.add("label-btn-add-project");
-        labelAddBtn.innerHTML = "New project";
+        containerAddBtn.appendChild(btnAddProject)
+        containerAddBtn.appendChild(labelAddBtn)
 
-        containerAddBtn.appendChild(btnAddProject);
-        containerAddBtn.appendChild(labelAddBtn);
-
-        return containerAddBtn;
+        return containerAddBtn
     }
 
+    function areaAddProjectInput() {
+        const containerAddBtn = document.createElement('div')
+        containerAddBtn.classList.add('add-project-container')
 
-    function areaAddProjectInput(){
-        const containerAddBtn = document.createElement("div");
-        containerAddBtn.classList.add("add-project-container");
+        const btnAddProject = document.createElement('img')
+        btnAddProject.classList.add('btn-add-project')
+        btnAddProject.src = iAdd
 
-        const btnAddProject = document.createElement("img");
-        btnAddProject.classList.add("btn-add-project");
-        btnAddProject.src = iAdd;
+        let container = document.createElement('div')
+        container.classList.add('input-and-notice-container')
 
-        let container = document.createElement("div");
-        container.classList.add("input-and-notice-container");
-        
-        let inputBox = document.createElement("input");
-        inputBox.classList.add("input-box-add-project");
-        inputBox.placeholder = "Press enter";
+        let inputBox = document.createElement('input')
+        inputBox.classList.add('input-box-add-project')
+        inputBox.placeholder = 'Press enter'
 
-        let notice = document.createElement("div");
-        notice.classList.add("notice");
-        notice.innerHTML = "**Press enter for saving new project"
+        let notice = document.createElement('div')
+        notice.classList.add('notice')
+        notice.innerText = '**Press enter for saving new project'
 
-        // containerAddBtn.appendChild(btnAddProject);
-        // containerAddBtn.appendChild(inputBox);
-        container.append(inputBox, notice);
-        containerAddBtn.append(btnAddProject, container);
-        return containerAddBtn;
+        container.append(inputBox, notice)
+        containerAddBtn.append(btnAddProject, container)
+        return containerAddBtn
     }
 
+    function areaDabatase() {
+        const btnStorageContainer = document.createElement('div')
+        btnStorageContainer.classList.add('storage-container')
+        const btnStorage = document.createElement('img')
+        btnStorage.classList.add('icon-database')
+        btnStorage.src = iDatabase
+        const labelBtnStorage = document.createElement('div')
+        labelBtnStorage.classList.add('label-icon-database')
+        labelBtnStorage.innerHTML = 'Reset database'
 
-    function areaDabatase(){
-        const btnStorageContainer = document.createElement("div"); 
-        btnStorageContainer.classList.add("storage-container");
-        const btnStorage = document.createElement("img");
-        btnStorage.classList.add("icon-database");
-        btnStorage.src = iDatabase;
-        const labelBtnStorage = document.createElement("div");
-        labelBtnStorage.classList.add("label-icon-database");
-        labelBtnStorage.innerHTML = "Reset database";
+        btnStorageContainer.appendChild(btnStorage)
+        btnStorageContainer.appendChild(labelBtnStorage)
 
-        btnStorageContainer.appendChild(btnStorage);
-        btnStorageContainer.appendChild(labelBtnStorage);
-
-        return btnStorageContainer;
+        return btnStorageContainer
     }
-
 
     function onloadLeft(projectList) {
-            
         const part1 = areaProjects(projectList)
-        containerLHS.appendChild( part1 )
+        containerLHS.appendChild(part1)
 
-        const part2 = areaAddProject() ;    
-        containerLHS.appendChild( part2 );
-        
-        const part3 = radialBtnsMenu.makeRadialMenu() ;
-        containerLHS.appendChild( part3 );
+        const part2 = areaAddProject()
+        containerLHS.appendChild(part2)
 
-        const part4 = areaDabatase();
-        containerLHS.appendChild( part4 );
+        const part3 = radialBtnsMenu.makeRadialMenu()
+        containerLHS.appendChild(part3)
+
+        const part4 = areaDabatase()
+        containerLHS.appendChild(part4)
     }
-
 
     function addProjectLoad(projectList) {
         const part1 = areaProjects(projectList)
-        containerLHS.appendChild( part1 )
-        const part2 = areaAddProjectInput() ;    
-        containerLHS.appendChild( part2 );
-        const part3 = radialBtnsMenu.makeRadialMenu() ;
-        containerLHS.appendChild( part3 );
-        const part4 = areaDabatase();
-        containerLHS.appendChild( part4 );
+        containerLHS.appendChild(part1)
+        const part2 = areaAddProjectInput()
+        containerLHS.appendChild(part2)
+        const part3 = radialBtnsMenu.makeRadialMenu()
+        containerLHS.appendChild(part3)
+        const part4 = areaDabatase()
+        containerLHS.appendChild(part4)
     }
 
-    return { 
+    return {
         onloadLeft,
         addProjectLoad,
     }
+})()
 
-})();
-
-export default leftDOM;
+export default leftDOM

@@ -1,6 +1,3 @@
-import leftDOM from './left_panel.js';
-import rightDOM from './right_panel.js';
-
 import { callback_showProjectDetails, 
     callback_deleteProject, 
     callback_addProject, 
@@ -79,8 +76,8 @@ const addListeners = (() => {
    }
 
     function listenerSaveEditedTask() {
-    const icon = document.querySelector(".btn-save-task");
-    icon.addEventListener("click", callback_saveEditedTask);
+        const icon = document.querySelector(".btn-save-task");
+        icon.addEventListener("click", callback_saveEditedTask);
     }
     
     function listenerDeleteTasks() {
@@ -103,7 +100,6 @@ const addListeners = (() => {
         icon.addEventListener("click", callback_manageTasks);
     }
     
-
     return { 
         listenerShowProjectDescription,
         listenerDeleteProject,
@@ -122,23 +118,6 @@ const addListeners = (() => {
         listenerSaveEditedTask,
         listenerCancelEditTasks,
    }
-
 })();
 
 export default addListeners;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
