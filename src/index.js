@@ -200,6 +200,7 @@ function callback_manageTasks() {
     addListeners.listenerCheckbox()
 
     radialBtnsMenu.enableRadianButtons()
+    radialBtnsMenu.listenerRadialMenu()
 }
 
 function callback_checkbox(e) {
