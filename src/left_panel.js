@@ -21,7 +21,6 @@ const leftDOM = (() => {
         ctProjectList.classList.add('project-list')
 
         _showProjects(projectList, ctProjects)
-
         ctProjects.appendChild(ctProjectList)
 
         return ctProjects

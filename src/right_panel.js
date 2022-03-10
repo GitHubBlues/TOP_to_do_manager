@@ -38,7 +38,7 @@ const rightDOM = (() => {
     function displayDescription(project) {
         const description = document.createElement('div')
         description.classList.add('text-description-project')
-        
+
         if (project.describe.length == 0) {
             description.innerHTML =
                 'Here you can add a very long description of your project.\
@@ -68,11 +68,11 @@ const rightDOM = (() => {
         divContainer.classList.add('all-tasks-container')
 
         let tasks = radialBtnsMenu.processTasksToShow(project.tasks)
-
         tasks.forEach((item) => {
             let onetask = _showOneTask(item)
             divContainer.appendChild(onetask)
         })
+
         return divContainer
     }
 
@@ -106,7 +106,6 @@ const rightDOM = (() => {
 
         const taskPriority = document.createElement('img')
         taskPriority.classList.add('task-priority')
-
         if (item[3] == 'high') {
             taskPriority.src = iFlag0
             taskPriority.title = 'high priority'
